@@ -275,7 +275,7 @@ inline ThaiParse parseThai(const char16_t* s, int n) {
 inline bool isLatin(char16_t c) { return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'); }
 
 inline bool looksLikeCode(const uint8_t* keys, int n) {
-    int digits = 0, letters = 0;
+    int digits = 0, letters = 0, dashes = 0;
     char16_t e[kMaxWord + 1];
     render(keys, n, LANG_EN, e);
     for (int i = 0; i < n; i++) {
@@ -287,8 +287,11 @@ inline bool looksLikeCode(const uint8_t* keys, int n) {
             case '{': case '}': case '%': case '&': case '$':
                 if (i != n - 1) return true;
                 break;
-            case '/':  // a/b, src/main - but a leading '/' is Thai ฝ (ฝน, ฝาก)
-                if (i > 0 && i < n - 1) return true;
+            case '/':  // a/b, src/main, and /command (slash commands in AI tools) - costs fixing ฝ-initial Thai (ฝาก)
+                if (i < n - 1) return true;
+                break;
+            case '-':  // skill-or-repo-name; a single '-' is too often Thai ข (ขอบคุณ, ไข่) to count
+                if (++dashes >= 2) return true;
                 break;
             case '.':  // file.ext, example.com: '.' followed by a short lower-case tail
                 if (i >= 2 && n - i - 1 >= 2 && n - i - 1 <= 5) {

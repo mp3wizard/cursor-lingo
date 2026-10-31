@@ -184,7 +184,7 @@ It keeps working after sleep, closing the lid, locking the screen or switching u
 1. the reading on screen is implausible for its language, and
 2. the other reading is plausible for its language.
 
-*English plausibility* uses a letter-trigram model (real words are cheap; Thai typed on a Latin layout is full of impossible sequences and punctuation keys such as `; ' , .` inside words). *Thai plausibility* uses Thai orthography: a word can't start with a tone mark or trailing vowel, vowels sit on consonants, a leading vowel needs a consonant after it, and so on. English typed on the Thai layout breaks these rules almost immediately. Very short words, numbers, paths, URLs, e-mail addresses and code-like words are never touched, because precision matters more than recall.
+*English plausibility* uses a letter-trigram model (real words are cheap; Thai typed on a Latin layout is full of impossible sequences and punctuation keys such as `; ' , .` inside words). *Thai plausibility* uses Thai orthography: a word can't start with a tone mark or trailing vowel, vowels sit on consonants, a leading vowel needs a consonant after it, and so on. English typed on the Thai layout breaks these rules almost immediately. Very short words, numbers, paths, URLs, e-mail addresses, `/commands`, `multi-dash-names` and code-like words are never touched, because precision matters more than recall.
 
 On a sample of real English and Thai words, correct text was wrongly changed in fewer than 1 in 1,000 cases, and about 80 % of wrong-layout words were fixed. Words it is unsure about are left alone.
 
